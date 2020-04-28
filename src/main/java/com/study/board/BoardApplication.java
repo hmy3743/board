@@ -20,11 +20,4 @@ public class BoardApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BoardApplication.class, args);
 	}
-
-	@EventListener(ApplicationReadyEvent.class)
-	public void onStart() {
-		postRepository.insert(
-				new Post(new ObjectId("507f191e810c19729de860ea"), "title", "content")
-		);
-	}
 }
