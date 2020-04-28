@@ -1,5 +1,7 @@
 package com.study.board.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.study.board.View;
 import com.study.board.model.CreateResult;
 import com.study.board.model.Post;
 import com.study.board.service.PostService;
@@ -22,6 +24,7 @@ public class PostController {
         this.postService = postService;
     }
 
+    @JsonView(View.Public.class)
     @RequestMapping(value = "/post", method = RequestMethod.POST, produces = "application/json")
     @NonNull CreateResult postPost(@RequestBody @Valid Post post) {
         final long executionBeginAt = System.currentTimeMillis();

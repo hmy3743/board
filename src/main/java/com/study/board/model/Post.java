@@ -1,5 +1,7 @@
 package com.study.board.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.study.board.View;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
@@ -20,11 +22,24 @@ import java.util.List;
 @ToString
 @Document(collection = "post")
 public class Post {
+    @JsonView(View.Public.class)
     @Id ObjectId id;
+
+    @JsonView(View.Public.class)
     @Indexed @NonNull @NotNull @NotEmpty ObjectId ownerId;
+
+    @JsonView(View.Public.class)
     @NonNull @NotNull @NotEmpty String title;
+
+    @JsonView(View.Public.class)
     @NonNull @NotNull String content;
+
+    @JsonView(View.Public.class)
     @CreatedDate Date createdAt;
+
+    @JsonView(View.Public.class)
     @LastModifiedDate Date updatedAt;
+
+    @JsonView(View.Public.class)
     List<Comment> comments = new ArrayList<>();
 }

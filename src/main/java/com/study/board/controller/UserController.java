@@ -1,5 +1,7 @@
 package com.study.board.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.study.board.View;
 import com.study.board.exception.UserNotFoundException;
 import com.study.board.model.User;
 import com.study.board.repository.UserRepository;
@@ -16,11 +18,13 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    @JsonView(View.Public.class)
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody User getUser(@PathVariable("id") String id) {
         return userRepository.findById(new ObjectId(id)).orElseThrow(UserNotFoundException::new);
     }
 
+    @JsonView(View.Public.class)
     @RequestMapping(value = "/user", method = RequestMethod.POST, produces = "application/json")
     public void postUser(@RequestBody User user) {
         userRepository.insert(user);

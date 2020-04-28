@@ -1,5 +1,7 @@
 package com.study.board.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.study.board.View;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +17,21 @@ import java.util.Date;
 @RequiredArgsConstructor
 @ToString
 public class Comment {
+    @JsonView(View.Public.class)
     @Id private ObjectId id;
+
+    @JsonView(View.Public.class)
     @NonNull private ObjectId postId;
+
+    @JsonView(View.Public.class)
     @NonNull private ObjectId ownerId;
+
+    @JsonView(View.Public.class)
     @NonNull private String content;
+
+    @JsonView(View.Public.class)
     @CreatedDate private Date createdAt;
+
+    @JsonView(View.Public.class)
     @LastModifiedDate private Date updatedAt;
 }
