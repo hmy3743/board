@@ -18,13 +18,10 @@ import java.util.Date;
 @ToString
 public class Comment {
     @JsonView(View.Public.class)
-    @Id private ObjectId id;
+    @Id private String id;
 
     @JsonView(View.Public.class)
-    @NonNull private ObjectId postId;
-
-    @JsonView(View.Public.class)
-    @NonNull private ObjectId ownerId;
+    @NonNull private String ownerId;
 
     @JsonView(View.Public.class)
     @NonNull private String content;

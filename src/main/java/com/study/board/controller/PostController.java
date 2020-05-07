@@ -14,7 +14,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@RestController(value = "/post")
+@RestController
+@RequestMapping("/post")
 public class PostController {
     PostService postService;
 
@@ -38,8 +39,9 @@ public class PostController {
     }
 
     @JsonView(View.Public.class)
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    @NonNull Response<Post> getPost(@RequestParam(value = "id") String id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
+    @NonNull
+    Response<Post> getPost(@PathVariable(value = "id") String id) {
         final long executionBeginAt = System.currentTimeMillis();
 
         Post post = postService.getPost(new ObjectId(id)).orElse(null);
@@ -49,18 +51,31 @@ public class PostController {
     }
 
     @JsonView(View.Public.class)
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    @NonNull Response<List<Post>> getPosts(
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", params = { "page", "per_page" })
+    @NonNull
+    Response<List<Post>> getPosts(
             @RequestParam(value = "page") int page,
-            @RequestParam(value = "per_page") int count,
-            @RequestParam(value = "owner", required = false) String ownerId) {
+            @RequestParam(value = "per_page") int count) {
         final long executionBeginAt = System.currentTimeMillis();
 
         List<Post> posts;
-        if(ownerId == null)
-            posts = postService.getPosts(page, count);
-        else
-            posts = postService.getPostsByOwner(page, count, new ObjectId(ownerId));
+        posts = postService.getPosts(page, count);
+
+        final long executionEndAt = System.currentTimeMillis();
+        return new Response<>(true, posts, executionBeginAt - executionBeginAt);
+    }
+
+    @JsonView(View.Public.class)
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", params = { "page", "per_page", "owner" })
+    @NonNull
+    Response<List<Post>> getPostsByOwner(
+            @RequestParam(value = "page") int page,
+            @RequestParam(value = "per_page") int count,
+            @RequestParam(value = "owner") String ownerId) {
+        final long executionBeginAt = System.currentTimeMillis();
+
+        List<Post> posts;
+        posts = postService.getPostsByOwner(page, count, new ObjectId(ownerId));
 
         final long executionEndAt = System.currentTimeMillis();
         return new Response<>(true, posts, executionBeginAt - executionBeginAt);
@@ -68,7 +83,8 @@ public class PostController {
 
     @JsonView(View.Public.class)
     @RequestMapping(method = RequestMethod.PUT, produces = "application/json")
-    @NonNull Response<Post> setPost(@RequestParam(value = "id") String id, @RequestBody Post post) {
+    @NonNull
+    Response<Post> setPost(@RequestParam(value = "id") String id, @RequestBody Post post) {
         final long executionBeginAt = System.currentTimeMillis();
 
         Optional<Post> result = Optional.empty();

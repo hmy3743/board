@@ -7,13 +7,13 @@ import org.springframework.lang.NonNull;
 import java.util.Optional;
 
 public interface UserService {
-    @NonNull Optional<ObjectId> createUser(@NonNull User user);
+    @NonNull Optional<String> createUser(@NonNull User user);
 
-    @NonNull Optional<User> getUser(@NonNull ObjectId userId);
+    @NonNull Optional<User> getUser(@NonNull String userId);
 
-    @NonNull Optional<User> setUser(@NonNull ObjectId userId, @NonNull User user);
-    @NonNull Optional<User> setUserName(@NonNull ObjectId userId, @NonNull String name);
-    @NonNull Optional<User> setUserPassword(@NonNull ObjectId userId, @NonNull String password);
+    @NonNull Optional<User> setUser(@NonNull String userId, @NonNull User user);
+    @NonNull Optional<User> setUserName(@NonNull String userId, @NonNull String name);
+    @NonNull Optional<User> setUserPassword(@NonNull String userId, @NonNull String password);
 
     boolean login(@NonNull String email, @NonNull String password);
 }
