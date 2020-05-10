@@ -37,7 +37,7 @@ public class PostServiceImpl implements PostService {
         } catch (DuplicateKeyException err) {
             /* logging */
         }
-        return Optional.ofNullable(created).map(Post::getId);
+        return Optional.ofNullable(created).map(Post::getId).map(ObjectId::new);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Optional<Post> getPostsById(ObjectId postId) {
+    public Optional<Post> getPost(ObjectId postId) {
         return postRepository.findById(postId);
     }
 

@@ -2,6 +2,7 @@ package com.study.board.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.study.board.View;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,6 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,8 +22,9 @@ import java.util.Date;
 @ToString
 @Document(collection = "user")
 public class User {
+    @ApiModelProperty(dataType = "String")
     @JsonView(View.Public.class)
-    @Id private ObjectId id;
+    @Id private String id;
 
     @JsonView(View.Public.class)
     @NonNull @NotNull private String name;

@@ -13,7 +13,7 @@ public interface PostService {
 
     @NonNull List<Post> getPosts(int page, @Max(100) int count);
     @NonNull List<Post> getPostsByOwner(int page, @Max(100) int count, ObjectId ownerId);
-    @NonNull Optional<Post> getPostsById(@NonNull ObjectId postId);
+    @NonNull Optional<Post> getPost(@NonNull ObjectId postId);
 
     @NonNull Optional<Post> setPost(@NonNull ObjectId postId, @NonNull Post post);
     @NonNull Optional<Post> setPostTitle(@NonNull ObjectId postId, @NonNull String title);
